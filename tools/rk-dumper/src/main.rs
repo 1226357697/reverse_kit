@@ -1,5 +1,4 @@
 use clap::{Parser, Subcommand};
-use goblin::pe;
 use sys::{Process, WindowsProcess};
 use std::fs::File;
 use std::io::Write;
@@ -53,8 +52,6 @@ fn parse_hex_string(s: &str) -> Result<usize, std::num::ParseIntError> {
 fn dump_pe(process: &WindowsProcess, base: usize, output_path: &str, fix_iat: bool) -> Result<(), Box<dyn std::error::Error>> {
     use goblin::pe::header::*;
     
-    
-
     let mut header = [0;0x1000];
     let bytes_read = process.read_memory(base, &mut header)?;
     if bytes_read != 0x1000 {
@@ -66,11 +63,11 @@ fn dump_pe(process: &WindowsProcess, base: usize, output_path: &str, fix_iat: bo
         + SIZEOF_PE_MAGIC
         + SIZEOF_COFF_HEADER;
     let mut offset = optional_header_offset + pe_hdr.coff_header.size_of_optional_header as usize;
-    
     let sections = pe_hdr.coff_header.sections(&header, &mut offset)?;
     
-    let mut f = File::create(output_path)?;
 
+
+    let mut f = File::create(output_path)?;
     f.write_all(header[..pe_hdr.optional_header.unwrap().windows_fields.size_of_headers as usize].as_ref())?;
 
     for s in &sections {

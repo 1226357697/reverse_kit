@@ -69,4 +69,17 @@ impl Process for WindowsProcess {
     fn memory_regions(&self) -> std::io::Result<Vec<MemoryRegion>> {
         todo!()
     }
+
+    
+    fn alloc_memory(&self, size: usize) -> io::Result<usize> {
+        todo!()
+    }
+
+    fn get_remote_function(&self, module_name: &str, function_name: &str) -> io::Result<usize> {
+        todo!()
+    }
+
+    fn remote_call(&self, func_addr: usize, args: &[usize]) -> io::Result<usize> {
+        todo!()
+    }
 }

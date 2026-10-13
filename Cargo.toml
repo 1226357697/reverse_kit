@@ -4,7 +4,7 @@ members = [
     "tools/rk-strings",
     "tools/rk-hexdump",
     "tools/rk-hasher", 
-    "tools/rk-dumper"
+    "tools/rk-dumper", "tools/rk-inject"
 ]
 resolver = "2"
 

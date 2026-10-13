@@ -37,4 +37,10 @@ pub trait Process {
     fn write_memory(&self, addr: usize, buf: &[u8]) -> io::Result<usize>;
 
     fn memory_regions(&self) -> io::Result<Vec<MemoryRegion>>;
+
+    fn alloc_memory(&self, size: usize) -> io::Result<usize>;
+
+    fn get_remote_function(&self, module_name: &str, function_name: &str) -> io::Result<usize>;
+
+    fn remote_call(&self, func_addr: usize, args: &[usize]) -> io::Result<usize>;
 }
