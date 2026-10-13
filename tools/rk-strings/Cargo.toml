@@ -1,0 +1,9 @@
+[package]
+name = "rk-strings"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+clap.workspace = true
+regex.workspace = true
+serde_json.workspace = true
