@@ -79,13 +79,12 @@ fn dump_pe(process: &WindowsProcess, base: usize, output_path: &str, fix_iat: bo
         let bytes_read = process.read_memory(base + s.virtual_address as usize, &mut data)?;
         if bytes_read != data.len() {
             eprintln!("Section {:?}: only {}/{} bytes read", s.name(), bytes_read, data.len());
-            // 决定是 continue 还是 return Err
+            return  Err("uncomplete read".into());
         }
 
         println!("Section: {:?}", s.name());
         f.write_all(&data)?;
     }
-    // println!("sections: {:?}", sections);
 
     Ok(())
 }
