@@ -40,6 +40,8 @@ pub trait Process {
 
     fn alloc_memory(&self, size: usize) -> io::Result<usize>;
 
+    fn free_memory(&self, addr: usize) -> io::Result<()>;
+
     fn get_remote_function(&self, module_name: &str, function_name: &str) -> io::Result<usize>;
 
     fn remote_call(&self, func_addr: usize, args: &[usize]) -> io::Result<usize>;

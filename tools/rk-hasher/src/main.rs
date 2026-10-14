@@ -1,25 +1,32 @@
 use std::io::{Seek, SeekFrom};
 
-use sha2::{Digest, Sha256};
-use sha3::{Sha3_256};
-use md5::{Md5};
-use clap::{Parser};
+use clap::Parser;
 use hex;
+use md5::Md5;
+use sha2::{Digest, Sha256};
+use sha3::Sha3_256;
 
-#[derive(Parser,Debug)]
+#[derive(Parser, Debug)]
 struct Cli {
+    #[arg(
+        long = "sha256",
+        default_value = "false",
+        help = "Calculate SHA256 hash"
+    )]
+    sha256: bool,
 
-    #[arg(long = "sha256",  default_value = "false", help = "Calculate SHA256 hash")]
-    sha256:bool,
-
-    #[arg(long = "sha3-256", default_value = "false", help = "Calculate SHA3-256 hash")]
-    sha3_256:bool,
+    #[arg(
+        long = "sha3-256",
+        default_value = "false",
+        help = "Calculate SHA3-256 hash"
+    )]
+    sha3_256: bool,
 
     #[arg(long = "md5", default_value = "false", help = "Calculate MD5 hash")]
-    md5:bool,
+    md5: bool,
 
     #[arg(value_name = "PATH")]
-    path:String,
+    path: String,
 }
 
 fn main() {

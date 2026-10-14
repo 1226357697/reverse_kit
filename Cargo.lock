@@ -374,6 +374,10 @@ dependencies = [
 [[package]]
 name = "rk-inject"
 version = "0.1.0"
+dependencies = [
+ "clap",
+ "sys",
+]
 
 [[package]]
 name = "rk-strings"
@@ -494,6 +498,7 @@ dependencies = [
 name = "sys"
 version = "0.1.0"
 dependencies = [
+ "goblin",
  "windows-sys 0.60.2",
 ]
 

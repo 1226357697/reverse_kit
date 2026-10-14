@@ -1,10 +1,10 @@
-use clap::{Parser,ValueEnum};
+use clap::{Parser, ValueEnum};
 use regex::Regex;
 use std::collections::HashMap;
 use std::fmt::Write;
 
 #[derive(Debug, Clone, ValueEnum)]
-enum OffsetFormat{
+enum OffsetFormat {
     None,
     Hex,
     Dec,
@@ -17,10 +17,9 @@ enum Encoding {
     All,
 }
 
-struct DisplayFormatConfig{
+struct DisplayFormatConfig {
     offset_format: OffsetFormat,
     with_entropy: bool,
-
 }
 
 #[derive(Parser, Debug)]
@@ -52,7 +51,6 @@ struct Args {
     )]
     max_entropy: Option<f64>,
 
-
     #[arg(
         long,
         value_enum,
@@ -83,11 +81,7 @@ struct Args {
     )]
     end: Option<String>,
 
-    #[arg(
-        long,
-        default_value = "false",
-        help = "Output results in JSON format"
-    )]
+    #[arg(long, default_value = "false", help = "Output results in JSON format")]
     json: bool,
 
     #[arg(value_name = "FILE")]
@@ -148,14 +142,16 @@ fn calculate_entropy(s: &str) -> f64 {
     entropy
 }
 
-
-fn parse_offset(value:&str)->Result<usize, String> {
-    if let Some(hex) = value.strip_prefix("0x").or_else(||value.strip_prefix("0X")) {
-        usize::from_str_radix(hex, 16)
-        .map_err(|_| format!("invalid hex offset: {value}"))
+fn parse_offset(value: &str) -> Result<usize, String> {
+    if let Some(hex) = value
+        .strip_prefix("0x")
+        .or_else(|| value.strip_prefix("0X"))
+    {
+        usize::from_str_radix(hex, 16).map_err(|_| format!("invalid hex offset: {value}"))
     } else {
-        value.parse::<usize>()
-        .map_err(|_| format!("invalid decimal offset: {value}"))
+        value
+            .parse::<usize>()
+            .map_err(|_| format!("invalid decimal offset: {value}"))
     }
 }
 
@@ -172,7 +168,6 @@ fn format_display_line(item: &StringItem, cfg: &DisplayFormatConfig) -> String {
         let entropy = calculate_entropy(&item.value);
         write!(s, ", Entropy: {:.2}", entropy).unwrap();
     }
-
 
     write!(s, ", String: {}", item.value).unwrap();
     s
@@ -204,7 +199,7 @@ fn main() {
         None => None,
     };
     let max_entropy: Option<f64> = args.max_entropy;
-    
+
     let start = match args.start {
         Some(s) => match parse_offset(s.as_str()) {
             Ok(offset) => offset,
@@ -240,7 +235,6 @@ fn main() {
         eprintln!("Error: Start offset must be less than end offset");
         return;
     }
-
 
     let scan_result = scan_ascii_strings(start, &file_data[start..end], min_len);
     let display_config = DisplayFormatConfig {

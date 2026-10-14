@@ -21,7 +21,9 @@ blake3 = "1.8.7"
 goblin = "0.10"   # 版本按需，0.10 是较新的稳定版
 windows-sys = { version = "0.60", features = [
     "Win32_Foundation",
+    "Win32_Security",
     "Win32_System_Threading",
+    "Win32_System_Memory",
     "Win32_System_Diagnostics_Debug",
     "Win32_System_Diagnostics_ToolHelp",
 ] }
